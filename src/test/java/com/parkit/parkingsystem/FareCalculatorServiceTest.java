@@ -115,4 +115,15 @@ public class FareCalculatorServiceTest {
         assertEquals( (27 * Fare.CAR_RATE_PER_HOUR) , ticket.getPrice());
     }
 
+    @Test
+    public void calculateFareCarWith40Minutes(){
+        outTime = new Date(inTime.getTime() + TimesDuration._40_MINUTES); // 40 minutes parking time should give 2/3th parking fare
+        ticket.setInTime(inTime);
+        ticket.setOutTime(outTime);
+        ticket.setParkingSpot(parkingSpotCar);
+
+        fareCalculatorService.calculateFare(ticket);
+        
+        assertEquals( (0.67 * Fare.CAR_RATE_PER_HOUR) , ticket.getPrice());
+    }
 }
