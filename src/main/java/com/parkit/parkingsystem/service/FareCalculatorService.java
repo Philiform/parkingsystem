@@ -6,6 +6,8 @@ import com.parkit.parkingsystem.model.Ticket;
 
 public class FareCalculatorService {
 
+	private static final double DUREE_30_MINUTES_EN_HEURE = 0.5;
+
 	private double inHour;
 	private double outHour;
 	private double duration;
@@ -19,7 +21,12 @@ public class FareCalculatorService {
       outHour = (double)ticket.getOutTime().getTime();
 
       //TODO: Some tests are failing here. Need to check if this logic is correct
-      duration = Math.round((outHour - inHour) / TimesDuration._1_HEURE * 100.0) / 100.0;
+      duration = roundValue( (outHour - inHour) / TimesDuration._1_HEURE);
+
+		if(duration < DUREE_30_MINUTES_EN_HEURE) {
+			duration = 0.0;
+		}
+		
 
         switch (ticket.getParkingSpot().getParkingType()){
             case CAR: {
@@ -33,4 +40,8 @@ public class FareCalculatorService {
             default: throw new IllegalArgumentException("Unkown Parking Type");
         }
     }
+	
+	public double roundValue(double valeur) {
+		return Math.round(valeur * 100.0) / 100.0;
+	}
 }

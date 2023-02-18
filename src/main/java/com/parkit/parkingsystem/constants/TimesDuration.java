@@ -3,6 +3,7 @@ package com.parkit.parkingsystem.constants;
 public class TimesDuration {
 	// les durées sont en millisecondes
     public static final long _1_MINUTE = 60 * 1000;
+    public static final long _29_MINUTES = 29 * _1_MINUTE;
     public static final long _40_MINUTES = 40 * _1_MINUTE;
     public static final long _45_MINUTES = 45 * _1_MINUTE;
     public static final long _1_HEURE = 60 * _1_MINUTE;
