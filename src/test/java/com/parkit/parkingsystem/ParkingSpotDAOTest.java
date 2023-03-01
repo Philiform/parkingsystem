@@ -2,12 +2,9 @@ package com.parkit.parkingsystem;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.when;
 
 import java.sql.SQLException;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -30,16 +27,8 @@ public class ParkingSpotDAOTest {
 	@Mock
 	private DataBaseTestConfig dataBaseTestConfigMock;
 	
-	@BeforeEach
-    private void setUpPerTest() {
-//		parkingSpotDAO = new ParkingSpotDAO();
-//		parkingSpotDAO.dataBaseConfig = dataBaseTestConfig;
-//		dataBasePrepareService = new DataBasePrepareService();
-//		dataBasePrepareService.clearDataBaseEntries();
-    }
-
 	@Test
-	public void getNextAvailableSlotForBike_Return4() {
+	public void getNextAvailableSlotForBike_Return4() throws Exception {
 		// GIVEN
 		parkingSpotDAO = new ParkingSpotDAO();
 		parkingSpotDAO.dataBaseConfig = dataBaseTestConfig;
@@ -55,19 +44,11 @@ public class ParkingSpotDAOTest {
 
 
 	@Test
-	public void getNextAvailableSlot_ReturnException() {
-		
-		try {
-			System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
+	public void getNextAvailableSlot_ReturnException() throws ClassNotFoundException, SQLException {
+		parkingSpotDAO = new ParkingSpotDAO();
+		parkingSpotDAO.dataBaseConfig = dataBaseTestConfigMock;
 
-				parkingSpotDAO = new ParkingSpotDAO();
-				parkingSpotDAO.getNextAvailableSlot(ParkingType.BIKE);
-				
-				System.out.println("vvvvvvvvvvvvvvvvvvvvvvvvvvvvvv");
-		} catch (Exception e) {
-			System.out.println("CATCH: ClassNotFoundException");
-			
-		}
+        assertThrows(Exception.class, () -> parkingSpotDAO.getNextAvailableSlot(ParkingType.AVION));
 	}
 
 	@Test

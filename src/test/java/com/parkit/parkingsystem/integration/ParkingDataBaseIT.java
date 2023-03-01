@@ -6,6 +6,10 @@ import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,10 +28,6 @@ import com.parkit.parkingsystem.model.ParkingSpot;
 import com.parkit.parkingsystem.model.Ticket;
 import com.parkit.parkingsystem.service.ParkingService;
 import com.parkit.parkingsystem.util.InputReaderUtil;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
 
 @ExtendWith(MockitoExtension.class)
 public class ParkingDataBaseIT {
@@ -62,7 +62,7 @@ public class ParkingDataBaseIT {
 	}
 
 	@Test
-	public void testParkingACar() {
+	public void testParkingACar() throws Exception {
 		// GIVEN
 		ParkingService parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO);
 		parkingService.processIncomingVehicle();
@@ -98,16 +98,12 @@ public class ParkingDataBaseIT {
 
 		// THEN
 		verify(inputReaderUtil).readSelection();
-		try {
-			verify(inputReaderUtil).readVehicleRegistrationNumber();
-		} catch (Exception e) {
-			System.out.println("Error reading input. Please enter a valid string for vehicle registration number");
-		}
+		verify(inputReaderUtil).readVehicleRegistrationNumber();
 		assertAll(() -> assertIterableEquals(expectedList, actualList));
 	}
 
 	@Test
-	public void testParkingLotExit() {
+	public void testParkingLotExit() throws Exception {
 		// GIVEN
 		testParkingACar();
 		ParkingService parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO);
@@ -137,7 +133,7 @@ public class ParkingDataBaseIT {
 	}
 
 	@Test
-	public void testRecurringUserIsTrue() {
+	public void testRecurringUserIsTrue() throws Exception {
 		// GIVEN
 		ParkingService parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO);
 		parkingService.processIncomingVehicle();
@@ -153,7 +149,7 @@ public class ParkingDataBaseIT {
 	}
 
 	@Test
-	public void testRecurringUserIsFalse() {
+	public void testRecurringUserIsFalse() throws Exception {
 		// GIVEN
 		ParkingService parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO);
 		parkingService.processIncomingVehicle();
@@ -169,4 +165,3 @@ public class ParkingDataBaseIT {
 	}
 
 }
-

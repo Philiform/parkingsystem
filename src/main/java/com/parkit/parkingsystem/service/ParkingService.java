@@ -28,7 +28,7 @@ public class ParkingService {
 		this.ticketDAO = ticketDAO;
 	}
 
-	public void processIncomingVehicle() {
+	public void processIncomingVehicle() throws Exception {
 		try {
 			ParkingSpot parkingSpot = getNextParkingNumberIfAvailable();
 			if (parkingSpot != null && parkingSpot.getId() > 0) {
@@ -51,7 +51,8 @@ public class ParkingService {
 				System.out.println("Recorded in-time for vehicle number:" + vehicleRegNumber + " is:" + inTime);
 			}
 		} catch (Exception e) {
-			logger.error("Unable to process incoming vehicle", e);
+			logger.error("Unable to process incoming vehicle {}", e.getMessage());
+			throw e;
 		}
 	}
 
